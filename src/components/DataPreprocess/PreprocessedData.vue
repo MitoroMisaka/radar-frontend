@@ -212,12 +212,17 @@ const submitForm = async () => {
     const response = await fetch(`http://127.0.0.1:5000/preprocess/${batch_name.value}/${windowing.value}/${clutter_suppression.value}`, {
       method: 'POST',
     });
-    console.log(response.data);
-    if (response.data.message) {
+    console.log(response);
+    if (response.ok) {
       // 处理成功提交的情况
       message.success('预处理成功');
       console.log('Preprocessing successful');
       // 刷新数据
+      // preprocessedData.value.push({
+      //   title: `预处理数据 ${preprocessedData.value.length + 1}`,
+      //   windowing_method: translatedWindowingMethod,
+      //   clutter_suppression_method: translatedClutterSuppressionMethod
+      // });
       await fetchPreprocessedData(batch_name.value);
     } else {
       message.error('预处理失败', response.data.error);

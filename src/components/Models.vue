@@ -124,6 +124,7 @@ const handleSubmit = async () => {
 
     if (response.ok) {
       message.success('模型上传成功');
+      await getModels();
     } else {
       message.error('模型上传失败');
     }
