@@ -195,6 +195,7 @@ const submitForm = async () => {
 
   console.log(preprocessedData.value[0]?.windowing_method, preprocessedData.value[0]?.clutter_suppression_method);
   console.log(translatedWindowingMethod, translatedClutterSuppressionMethod);
+  message.loading('预处理中请耐心等待', 0);
   // 检查 windowing 和 clutter_suppression 是否已经存在
   const isExist = preprocessedData.value.some(data => {
     return data.windowing_method === translatedWindowingMethod && data.clutter_suppression_method === translatedClutterSuppressionMethod;
@@ -214,8 +215,12 @@ const submitForm = async () => {
     });
     console.log(response);
     if (response.ok) {
+      message.destroy()
       // 处理成功提交的情况
-      message.success('预处理成功');
+      Modal.success({
+        title: '预处理结果',
+        content: '预处理成功',
+      });
       console.log('Preprocessing successful');
       // 刷新数据
       // preprocessedData.value.push({
@@ -225,11 +230,19 @@ const submitForm = async () => {
       // });
       await fetchPreprocessedData(batch_name.value);
     } else {
-      message.error('预处理失败', response.data.error);
+      message.destroy()
+      Modal.error({
+        title: '预处理结果',
+        content: '预处理失败',
+      });
       console.error('Error preprocessing:', response.data.error);
     }
   } catch (error) {
-    message.error('预处理失败', error.message);
+    message.destroy()
+    Modal.error({
+      title: '预处理结果',
+      content: '预处理失败',
+    });
     console.error('Error preprocessing:', error.message);
   }
 };

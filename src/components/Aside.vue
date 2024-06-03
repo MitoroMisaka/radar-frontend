@@ -38,6 +38,7 @@ function getItem(
 const items: ItemType[] = reactive([
   getItem('数据管理', 'sub1', () => h(MailOutlined), [
     getItem('数据上传', '1'),
+    getItem('路径上传', '7'),
     getItem('数据查看', '2'),
     getItem('数据预处理', '3'),
   ]),
@@ -76,9 +77,9 @@ const handleClick: MenuProps['onClick'] = e => {
     case '6':
       router.push('/run-model');
       break;
-    // case '7':
-    //   router.push('/model-log');
-    //   break;
+    case '7':
+      router.push('/model-log');
+      break;
     default:
       break;
   }
