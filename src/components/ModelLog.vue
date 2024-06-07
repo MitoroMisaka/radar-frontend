@@ -100,6 +100,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+        message.loading('上传中，请耐心等待', 0)
         // Get form data
         const formData = new FormData();
         formData.append('batch_name', this.formState.batchname);
@@ -117,19 +118,23 @@ export default {
           }
         });
 
+
         // Handle server response
         if (response.data.message) {
+          message.destroy()
           Modal.success({
             title: 'UPLOAD SUCCESS',
             content: response.data.message
           });
         } else {
+          message.destroy()
           Modal.error({
             title: 'UPLOAD FAILED',
             content: response.data.error
           });
         }
       } catch (error) {
+        message.destroy()
         Modal.error({
           title: 'UPLOAD FAILED',
           content: error.message
